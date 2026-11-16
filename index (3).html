@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="cute">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[ชื่อเล่น] | ผลงานและช่องทางติดต่อ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme=cute]{--bg:#FFF5E6;--card:#FFFDF8;--ink:#4A3B36;--muted:#8C7A70;--line:#EBD3B5;--accent:#F28FA3;--ai:#fff;--r:20px;--font:"Mali","Sarabun","Noto Sans Thai",system-ui,sans-serif;--bd:6px solid #fff;--sh:0 3px 10px rgba(120,80,40,.18);--ib:2px dashed var(--line);--tn:#FFE3EA;--tn2:#DFF3E6}
+[data-theme=formal]{--bg:#fff;--card:#fff;--ink:#111;--muted:#6B6B6B;--line:#D9D9D9;--accent:#111;--ai:#fff;--r:4px;--font:"Sarabun","Noto Sans Thai",system-ui,sans-serif;--bd:1px solid var(--line);--sh:none;--ib:1px solid var(--line);--tn:#EEE;--tn2:#EEE}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.65;overflow-x:hidden;-webkit-text-size-adjust:100%}
+[data-theme=cute] body{background-image:radial-gradient(var(--line) 1.2px,transparent 1.2px);background-size:22px 22px}
+button,select,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.only-edit{display:none!important}
+.editing .only-edit{display:flex!important}
+.bar{position:fixed;z-index:20;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:8px;padding:max(10px,env(safe-area-inset-top)) 12px 0;pointer-events:none}
+.bar>*{pointer-events:auto}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button,#toggle{min-height:36px;padding:0 14px;border-radius:999px;border:0;background:none;cursor:pointer;font-size:.85rem}
+.seg button[aria-pressed=true],.editing #toggle{background:var(--accent);color:var(--ai)}
+#toggle{background:var(--card);border:1px solid var(--line)}
+.wrap{position:relative;max-width:560px;margin:0 auto;padding:72px 20px 56px}
+section{margin-top:44px}
+h2{font-size:1.2rem;font-weight:600;margin-bottom:14px}
+.tools{flex-wrap:wrap;gap:8px;margin-bottom:22px;padding:12px;border:var(--ib);border-radius:var(--r);background:var(--card)}
+.tools p{flex-basis:100%;font-size:.82rem;color:var(--muted)}
+.tools button,.pill{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.tools .main{background:var(--accent);color:var(--ai);border-color:var(--accent);font-weight:600}
+.fld{width:100%;min-height:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card)}
+.hero{text-align:center}
+.avatar{width:120px;height:120px;border-radius:50%;margin:0 auto 16px;background:var(--tn);border:var(--bd);box-shadow:var(--sh);display:grid;place-items:center;overflow:hidden;font-size:2.6rem;color:var(--accent);position:relative}
+.avatar img,.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.has img{display:block}.has .ph{display:none}
+.hero h1{font-size:1.8rem;line-height:1.3}
+.hero p{color:var(--muted);margin:8px auto 0;max-width:34ch}
+[contenteditable]{outline:1px dashed var(--accent);outline-offset:4px;border-radius:6px;cursor:text}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.work{position:relative;background:var(--card);border:var(--bd);box-shadow:var(--sh);border-radius:var(--r);overflow:hidden;transition:scale .2s}
+[data-theme=cute] .work:nth-child(odd){rotate:-1.4deg}
+[data-theme=cute] .work:nth-child(even){rotate:1.4deg}
+.thumb{aspect-ratio:4/5;display:grid;place-items:center;position:relative;overflow:hidden;background:var(--tn);color:var(--muted);font-size:.85rem}
+.work:nth-child(even) .thumb{background:var(--tn2)}
+.thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.play{display:none;position:absolute;width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.6);pointer-events:none;place-items:center}
+.play::before{content:"";margin-left:4px;border-left:15px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+[data-vk] .play{display:grid}[data-vk].on .play,.editing .play{display:none}
+[data-vk]:not(.on){cursor:pointer}
+.editing .thumb{cursor:pointer}
+.editing .thumb::after{content:"แตะเพื่อเปลี่ยนรูป/ปก";position:absolute;left:8px;right:8px;bottom:8px;padding:5px;border-radius:8px;background:var(--ink);color:var(--bg);text-align:center;font-size:.78rem}
+.cap{padding:10px 12px 14px}
+.cap b{display:block;font-weight:600;font-size:.95rem}
+.cap span{display:block;color:var(--muted);font-size:.85rem;line-height:1.5}
+.cap .fld{margin-top:8px;min-height:38px;font-size:.8rem}
+.x{position:absolute;top:6px;right:6px;z-index:2;width:34px;height:34px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);cursor:pointer;align-items:center;justify-content:center}
+.addw{margin-top:14px;width:100%;justify-content:center;align-items:center}
+.list{display:grid;gap:10px}
+.item{display:flex;gap:14px;padding:16px;background:var(--card);border:var(--ib);border-radius:var(--r)}
+.item i{font-style:normal;font-size:1.6rem;line-height:1.2}
+.item b{display:block;font-weight:600}
+.item span{display:block;color:var(--muted);font-size:.92rem}
+#links{display:grid;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:58px;padding:0 20px;border-radius:var(--r);text-decoration:none;text-align:center;background:var(--card);border:var(--ib);font-weight:600;transition:scale .2s,background .2s,color .2s}
+.btn:hover{background:var(--accent);color:var(--ai);border-color:var(--accent);scale:1.03}
+.lrow.edit{display:grid;grid-template-columns:1fr 48px;gap:6px;padding:10px;border:var(--ib);border-radius:var(--r);background:var(--card)}
+.lrow.edit .del{grid-column:2;grid-row:1/4;border:var(--ib);border-radius:var(--r);background:var(--card);cursor:pointer;font-size:1.3rem}
+.foot{text-align:center;color:var(--muted);font-size:.88rem;margin-top:36px}
+#stk{position:absolute;inset:0;z-index:10;pointer-events:none}
+.stk{position:absolute;user-select:none}
+.stk img{display:block;width:100%;height:auto;pointer-events:none}
+.editing .stk{pointer-events:auto;cursor:grab;touch-action:none;outline:1px dashed var(--accent)}
+.stb{display:none;position:absolute;top:-38px;left:0;gap:4px}
+.editing .sel .stb{display:flex}
+.stb button{width:34px;height:34px;border-radius:50%;border:0;background:var(--ink);color:var(--bg);cursor:pointer}
+#msg{position:fixed;z-index:30;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}
+#msg.on{opacity:1}
+@keyframes fl{50%{translate:0 -6px}}
+@keyframes fs{50%{translate:0 -3px}}
+.avatar,.work,.stk img{animation:fl 6s ease-in-out infinite}
+.work:nth-child(even){animation-duration:7.5s;animation-delay:-2s}
+.btn,.item{animation:fs 5s ease-in-out infinite}
+#links>:nth-child(even),.item:nth-child(even){animation-delay:-2.5s}
+.work:hover{scale:1.03}
+.editing *,.editing *::after{animation:none!important}
+@media (prefers-reduced-motion:reduce){*,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="seg" role="group" aria-label="สลับธีม"><button type="button" data-th="cute">🎀 Cute</button><button type="button" data-th="formal">◻ Formal</button></div>
+  <button id="toggle" type="button">✎ แก้ไข</button>
+</div>
+<main class="wrap" id="wrap">
+  <div class="tools only-edit">
+    <p>โหมดแก้ไข: แตะข้อความเพื่อพิมพ์ แตะรูปเพื่อเปลี่ยน ลากสติกเกอร์เพื่อย้าย เสร็จแล้วกดดาวน์โหลดแล้วอัปโหลดขึ้นเว็บ ผู้เข้าชมจะเห็นแบบอ่านอย่างเดียว</p>
+    <button class="main" id="exp" type="button">⬇ ดาวน์โหลดหน้าเว็บ (Export HTML)</button>
+    <button id="stkBtn" type="button">✨ เพิ่มสติกเกอร์</button>
+    <button id="copy" type="button">🔗 คัดลอกลิงก์แชร์</button>
+    <button id="reset" type="button">↺ รีเซ็ต</button>
+  </div>
+  <header class="hero">
+    <div class="avatar" data-img="avatar" role="img" aria-label="รูปโปรไฟล์"><span class="ph">ช</span><img alt=""></div>
+    <button class="pill only-edit" id="avBtn" type="button" style="margin:0 auto 10px;align-items:center">📷 เปลี่ยนรูปโปรไฟล์</button>
+    <h1 data-t="name">ว่าไง! เราชื่อ [ชื่อเล่น]</h1>
+    <p data-t="bio">ชอบถือกล้อง ตัดคลิป แล้วก็ทำของครีเอทีฟไปเรื่อย ผลงานกับช่องทางติดต่ออยู่ในหน้านี้หมดแล้ว</p>
+  </header>
+  <section><h2 data-t="h1">ผลงานที่ภูมิใจนำเสนอ</h2>
+    <div class="grid" id="grid"></div>
+    <button class="pill addw only-edit" id="addW" type="button">＋ เพิ่มการ์ดผลงาน</button>
+  </section>
+  <section><h2 data-t="h2">รับทำอะไรบ้าง</h2>
+    <div class="list">
+      <div class="item"><i>📸</i><div><b data-t="s1t">ถ่ายภาพ</b><span data-t="s1d">สินค้า คาเฟ่ ไลฟ์สไตล์ พอร์ตเทรต</span></div></div>
+      <div class="item"><i>🎬</i><div><b data-t="s2t">ตัดต่อ / ทำคอนเทนต์</b><span data-t="s2d">คลิปสั้น ยูทูป รีวิว เล่าเรื่องให้สนุก</span></div></div>
+      <div class="item"><i>💻</i><div><b data-t="s3t">งานอื่นๆ</b><span data-t="s3d">มีโปรเจกต์ในใจ ลองมาคุยกันก่อนได้ ไม่คิดเงินค่าคุย</span></div></div>
+    </div>
+  </section>
+  <section><h2 data-t="h3">อยากจ้าง อยากคุย หรือแค่อยากทักทาย</h2>
+    <div id="links"></div>
+    <button class="pill addw only-edit" id="add" type="button">＋ เพิ่มช่องทางติดต่อ</button>
+    <p class="foot" data-t="foot">ตอบไวตอนว่าง ถ้าเงียบไปแปลว่ากำลังออกกอง 😆</p>
+  </section>
+  <div id="stk"></div>
+</main>
+<input type="file" id="pick" accept="image/*" hidden>
+<div id="msg" role="status" aria-live="polite"></div>
+<script id="seed" type="application/json">null</script>
+<script>
+(() => {
+  const KEY = 'pf-v3', TK = 'pf-theme';
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const web = (v, b) => /^(https?:|tel:)/i.test(v) ? v : b + v.replace(/^@/, '');
+  const P = {
+    instagram: ['Instagram', '📸', v => web(v, 'https://instagram.com/')],
+    tiktok: ['TikTok', '🎵', v => web(v, 'https://tiktok.com/@')],
+    youtube: ['YouTube', '▶️', v => web(v, 'https://youtube.com/@')],
+    x: ['X (Twitter)', '𝕏', v => web(v, 'https://x.com/')],
+    line: ['Line', '💬', v => web(v, 'https://line.me/ti/p/~')],
+    phone: ['โทร', '📞', v => 'tel:' + v.replace(/[^\d+]/g, '')],
+    other: ['อื่นๆ', '🔗', v => /^https?:/i.test(v) ? v : 'https://' + v]
+  };
+  const D = {
+    theme: 'cute', text: {}, img: {}, stickers: [],
+    works: [[1, '[ภาพถ่าย / พอร์ตเทรต]', 'เก็บโมเมนต์ให้ดูเป็นธรรมชาติที่สุด'], [2, '[คลิป / Vlog]', 'เล่าเรื่องแบบไม่เกร็ง ดูแล้วเพลินๆ'], [3, '[ถ่ายสินค้า / คาเฟ่]', 'ให้ของดูน่าหยิบ น่าไปลอง'], [4, '[กราฟิก / เว็บ]', 'ออกแบบเองทั้งหมด']].map(([id, t, d]) => ({ id, t, d, v: '' })),
+    links: [['instagram', 'IG ของเรา', '@USERNAME'], ['youtube', 'ไปดูช่องยูทูปกัน', '@CHANNEL'], ['line', 'ทักไลน์มาได้เลย', 'LINEID'], ['phone', 'โทรหาเรา', '080-000-0000']].map(([p, n, v]) => ({ p, n, v }))
+  };
+  let seed = null, saved = null;
+  try { seed = JSON.parse($('#seed').textContent); } catch (e) {}
+  try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+  const st = Object.assign({}, D, saved || seed || {});
+  let editing = false, pending = null, mt;
+  /* ผู้เข้าชมเว็บจริงเป็นแบบอ่านอย่างเดียว เจ้าของแก้ไขได้ตอนเปิดไฟล์ในเครื่อง หรือต่อท้ายลิงก์ด้วย ?edit */
+  const OWNER = location.protocol === 'file:' || /[?&]edit\b/.test(location.search);
+  if (!OWNER) $('#toggle').remove();
+
+  const msg = t => { const m = $('#msg'); m.textContent = t; m.classList.add('on'); clearTimeout(mt); mt = setTimeout(() => m.classList.remove('on'), 3000); };
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { msg('บันทึกในเบราว์เซอร์ไม่ได้ (พื้นที่เต็ม) กรุณาดาวน์โหลดหน้าเว็บเก็บไว้'); } };
+
+  const setTheme = (t, persist) => {
+    document.documentElement.dataset.theme = t; st.theme = t;
+    $$('[data-th]').forEach(b => b.setAttribute('aria-pressed', b.dataset.th === t));
+    if (persist) try { localStorage.setItem(TK, t); } catch (e) {}
+  };
+  let th = st.theme; try { th = localStorage.getItem(TK) || th; } catch (e) {}
+  setTheme(th, false);
+  $$('[data-th]').forEach(b => b.onclick = () => setTheme(b.dataset.th, true));
+
+  const ed = (el, o, k) => { el.textContent = o[k]; el.dataset.e = 1; el._set = v => { o[k] = v; }; };
+  $$('[data-t]').forEach(el => { const k = el.dataset.t; if (st.text[k] == null) st.text[k] = el.textContent; ed(el, st.text, k); });
+  const applyEd = () => $$('[data-e]').forEach(el => {
+    if (!editing) return el.removeAttribute('contenteditable');
+    el.setAttribute('contenteditable', 'plaintext-only');
+    if (el.contentEditable !== 'plaintext-only') el.contentEditable = 'true';
+  });
+  document.addEventListener('focusout', e => { const el = e.target; if (editing && el._set) { el._set(el.textContent.trim()); save(); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target._set) { e.preventDefault(); e.target.blur(); } });
+
+  /* รูปภาพ */
+  const shrink = (f, max, png) => new Promise((ok, no) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const im = new Image();
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas');
+        c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+        ok(c.toDataURL(png ? 'image/png' : 'image/jpeg', .82));
+      };
+      im.onerror = no; im.src = r.result;
+    };
+    r.onerror = no; r.readAsDataURL(f);
+  });
+  const showImg = k => {
+    const b = $('[data-img="' + k + '"]'); if (!b) return;
+    const im = $('img', b);
+    if (st.img[k]) { im.src = st.img[k]; b.classList.add('has'); } else { im.removeAttribute('src'); b.classList.remove('has'); }
+  };
+  const choose = k => { pending = k; $('#pick').click(); };
+  $('#avBtn').onclick = () => choose('avatar');
+  $('#stkBtn').onclick = () => choose('sticker');
+  $('#pick').onchange = async e => {
+    const f = e.target.files[0], k = pending; e.target.value = '';
+    if (!f || !k) return;
+    try {
+      if (k === 'sticker') {
+        st.stickers.push({ src: await shrink(f, 300, true), x: 35, y: Math.max(20, Math.round(scrollY - $('#wrap').offsetTop + 160)), w: 90 });
+        renderStk();
+      } else { st.img[k] = await shrink(f, k === 'avatar' ? 400 : 700); showImg(k); if (k !== 'avatar') renderWorks(); }
+      save();
+    } catch (err) { msg('เปิดรูปนี้ไม่ได้ ลองไฟล์ JPG หรือ PNG'); }
+  };
+
+  /* วิดีโอ: รับลิงก์ YouTube / TikTok หรือโค้ด embed */
+  const vid = u => {
+    u = (u || '').trim(); let m;
+    if (/<iframe/i.test(u) && (m = u.match(/src=["']([^"']+)/))) u = m[1];
+    if (m = u.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/)) return 'yt:' + m[1];
+    if (m = u.match(/tiktok\.com\/(?:.*\/video\/|embed\/(?:v2\/)?)(\d+)/)) return 'tt:' + m[1];
+    return '';
+  };
+  const play = b => {
+    const [k, id] = b.dataset.vk.split(':'), f = document.createElement('iframe');
+    f.src = k === 'yt' ? 'https://www.youtube.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0' : 'https://www.tiktok.com/embed/v2/' + id;
+    f.allow = 'autoplay; encrypted-media; fullscreen'; f.allowFullscreen = true; f.title = 'วิดีโอผลงาน';
+    b.append(f); b.classList.add('on');
+  };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.thumb, .avatar'); if (!b) return;
+    if (editing) choose(b.dataset.img); else if (b.dataset.vk && !b.classList.contains('on')) play(b);
+  });
+
+  /* การ์ดผลงาน กรอบขนาดคงที่ 4:5 */
+  const renderWorks = () => {
+    const g = $('#grid'); g.textContent = '';
+    st.works.forEach(w => {
+      const c = document.createElement('div'), key = 'w' + w.id, vk = vid(w.v); c.className = 'work';
+      c.innerHTML = '<div class="thumb" data-img="' + key + '"><span class="ph">รูปผลงาน</span><img alt=""><span class="play"></span></div><div class="cap"><b></b><span></span><input class="fld only-edit" placeholder="ลิงก์วิดีโอ YouTube / TikTok (ไม่ใส่ก็ได้)" aria-label="ลิงก์วิดีโอ"></div><button class="x only-edit" type="button" aria-label="ลบการ์ด">×</button>';
+      ed($('b', c), w, 't'); ed($('span', c), w, 'd');
+      const inp = $('input', c); inp.value = w.v || '';
+      inp.onchange = () => { w.v = inp.value.trim(); if (w.v && !vid(w.v)) msg('ไม่รู้จักลิงก์นี้ ใช้ลิงก์วิดีโอ YouTube หรือ TikTok (ไม่ใช่ลิงก์สั้น vm.tiktok.com)'); save(); renderWorks(); };
+      $('.x', c).onclick = () => { st.works = st.works.filter(x => x !== w); delete st.img[key]; save(); renderWorks(); };
+      g.append(c);
+      const t = $('.thumb', c); if (vk) t.dataset.vk = vk;
+      showImg(key);
+      if (!st.img[key] && vk.startsWith('yt:')) { $('img', t).src = 'https://img.youtube.com/vi/' + vk.slice(3) + '/hqdefault.jpg'; t.classList.add('has'); }
+    });
+    applyEd();
+  };
+  $('#addW').onclick = () => { st.works.push({ id: Date.now(), t: 'ชื่อผลงาน', d: 'คำอธิบายสั้นๆ', v: '' }); save(); renderWorks(); };
+
+  /* ช่องทางติดต่อ: แพลตฟอร์ม / ชื่อที่แสดง / ลิงก์หรือไอดี */
+  const renderLinks = () => {
+    const box = $('#links'); box.textContent = '';
+    st.links.forEach(l => {
+      const d = P[l.p] || P.other;
+      if (!editing) {
+        if (!l.v) return;
+        const a = document.createElement('a'); a.className = 'btn';
+        let h = d[2](l.v); if (!/^(https?:|tel:)/i.test(h)) h = '#';
+        a.href = h; a.textContent = d[1] + ' ' + (l.n || d[0]);
+        if (!h.startsWith('tel:')) { a.target = '_blank'; a.rel = 'noopener'; }
+        return box.append(a);
+      }
+      const row = document.createElement('div'), sel = document.createElement('select'), x = document.createElement('button');
+      row.className = 'lrow edit'; sel.className = 'fld'; sel.setAttribute('aria-label', 'แพลตฟอร์ม');
+      Object.entries(P).forEach(([k, v]) => sel.append(new Option(v[1] + ' ' + v[0], k)));
+      sel.value = l.p; sel.onchange = () => { l.p = sel.value; save(); };
+      const mk = (ph, k) => { const i = document.createElement('input'); i.className = 'fld'; i.placeholder = ph; i.setAttribute('aria-label', ph); i.value = l[k] || ''; i.onchange = () => { l[k] = i.value.trim(); save(); }; return i; };
+      x.type = 'button'; x.className = 'del'; x.textContent = '×'; x.setAttribute('aria-label', 'ลบช่องทางนี้');
+      x.onclick = () => { st.links.splice(st.links.indexOf(l), 1); save(); renderLinks(); };
+      row.append(sel, mk('ชื่อที่แสดงบนปุ่ม เช่น ไปดูช่องยูทูปกัน', 'n'), mk('ลิงก์หรือไอดี (ซ่อนไว้หลังปุ่ม)', 'v'), x);
+      box.append(row);
+    });
+  };
+  $('#add').onclick = () => { st.links.push({ p: 'instagram', n: '', v: '' }); save(); renderLinks(); };
+
+  /* สติกเกอร์ */
+  const renderStk = sel => {
+    const box = $('#stk'); box.textContent = '';
+    st.stickers.forEach((s, i) => {
+      const d = document.createElement('div'); d.className = 'stk' + (i === sel ? ' sel' : '');
+      d.style.cssText = 'left:' + s.x + '%;top:' + s.y + 'px;width:' + s.w + 'px';
+      d.innerHTML = '<img alt="" draggable="false"><div class="stb"><button data-a="up" aria-label="ขยาย">＋</button><button data-a="dn" aria-label="ย่อ">－</button><button data-a="rm" aria-label="ลบ">×</button></div>';
+      $('img', d).src = s.src;
+      d.onpointerdown = e => {
+        if (!editing || e.target.closest('.stb')) return;
+        $$('.stk.sel').forEach(x => x.classList.remove('sel')); d.classList.add('sel');
+        const r = $('#wrap').getBoundingClientRect(), q = d.getBoundingClientRect(), ox = e.clientX - q.left, oy = e.clientY - q.top;
+        d.setPointerCapture(e.pointerId);
+        d.onpointermove = m => {
+          s.x = +((m.clientX - ox - r.left) / r.width * 100).toFixed(2); s.y = Math.round(m.clientY - oy - r.top);
+          d.style.left = s.x + '%'; d.style.top = s.y + 'px';
+        };
+        d.onpointerup = () => { d.onpointermove = d.onpointerup = null; save(); };
+      };
+      $('.stb', d).onclick = e => {
+        const a = e.target.dataset.a; if (!a) return;
+        if (a === 'rm') { st.stickers.splice(i, 1); save(); return renderStk(); }
+        s.w = Math.max(30, Math.min(320, s.w + (a === 'up' ? 15 : -15))); save(); renderStk(i);
+      };
+      box.append(d);
+    });
+  };
+
+  /* โหมดแก้ไข ส่งออก แชร์ รีเซ็ต */
+  if (OWNER) $('#toggle').onclick = function () {
+    editing = !editing; document.body.classList.toggle('editing', editing);
+    this.textContent = editing ? '✓ เสร็จแล้ว' : '✎ แก้ไข';
+    if (!editing) $$('.stk.sel').forEach(x => x.classList.remove('sel'));
+    renderLinks(); renderWorks();
+  };
+  $('#exp').onclick = () => {
+    const c = document.documentElement.cloneNode(true);
+    $('#seed', c).textContent = JSON.stringify(st).replace(/</g, '\\u003c');
+    $('body', c).classList.remove('editing');
+    $$('[contenteditable]', c).forEach(e => e.removeAttribute('contenteditable'));
+    ['#grid', '#links', '#stk', '#msg'].forEach(s => { $(s, c).textContent = ''; });
+    $('#msg', c).className = ''; $('#toggle', c).textContent = '✎ แก้ไข';
+    $$('[data-img] img', c).forEach(i => i.removeAttribute('src'));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['<!DOCTYPE html>\n' + c.outerHTML], { type: 'text/html' }));
+    a.download = 'index.html'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    msg('ได้ไฟล์ index.html แล้ว นำไปอัปโหลดทับไฟล์เดิมบน GitHub ได้เลย');
+  };
+  $('#copy').onclick = async () => {
+    if (location.protocol === 'file:') return msg('ตอนนี้เปิดจากไฟล์ในเครื่อง ต้องอัปโหลดขึ้น GitHub Pages ก่อน ลิงก์ถึงจะใช้ได้');
+    const u = location.origin + location.pathname;
+    try { await navigator.clipboard.writeText(u); msg('คัดลอกลิงก์แชร์แล้ว (ผู้เข้าชมจะเห็นแบบอ่านอย่างเดียว)'); }
+    catch (e) { prompt('คัดลอกลิงก์นี้', u); }
+  };
+  $('#reset').onclick = () => {
+    if (confirm('ล้างทุกอย่างที่แก้ไว้ในเบราว์เซอร์นี้ แล้วกลับเป็นค่าเริ่มต้น?')) { try { localStorage.removeItem(KEY); localStorage.removeItem(TK); } catch (e) {} location.reload(); }
+  };
+
+  showImg('avatar'); renderWorks(); renderLinks(); renderStk();
+})();
+</script>
+</body>
+</html>
